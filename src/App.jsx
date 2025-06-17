@@ -6,7 +6,7 @@ import Contacts from './components/Contacts'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from './config/firebase'
 const App = () => {
-
+  const [isUpdate,setisUpdate] = React.useState(false)
   const [contacts, setContacts] = React.useState([]);
   const [isOpen,setOpen] = React.useState(false);
   
@@ -17,8 +17,6 @@ const App = () => {
   const OnClose = ()=>{
     setOpen(false);
   }
-
-
 
   useEffect(()=>{
     const getContact = async () =>{
@@ -55,12 +53,12 @@ const App = () => {
        <div className=' overflow-y-scroll hide-scrollbar '>
           {
         contacts.map((contact)=>{
-          return <Contacts key={contact.id} name={contact.Name} email={contact.Email}/>
+          return <Contacts id={contact.id} name={contact.name} email={contact.email} setisUpdate={setisUpdate} OnOpen={OnOpen}/>
         })
        }
        </div>
        
-       <FormModal isOpen={isOpen} onClose={OnClose}/>  
+       <FormModal isOpen={isOpen} onClose={OnClose} setOpen={setOpen} isUpdate={isUpdate} contact={contact}/>  
       </div>
 
            
