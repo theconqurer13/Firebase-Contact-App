@@ -21,8 +21,8 @@ const App = () => {
           ...doc.data(),
         }
       });
-        const data = await contactList.json();
-        setContacts(data);
+       
+        setContacts(contactList);
       } catch (error) {
         throw {error}
       }
@@ -37,12 +37,17 @@ const App = () => {
 
 
   return (
+    
     <div className='flex justify-center '>
       <div className='flex flex-col items-center h-[852px] w-[400px] p-5  gap-1'>
        <Navbar/>
        <Search/>
        {/* <FormModal/> */}
-       <Contacts/>
+       {
+        contacts.map((contact)=>{
+          return <Contacts key={contact.id} name={contact.Name} email={contact.Email}/>
+        })
+       }
       </div>
     </div>
   )

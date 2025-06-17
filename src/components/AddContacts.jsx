@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FormModal = () => {
+const FormModal = ({onClose,isOpen,children}) => {
   return (
     <div className='h-[244px] w-[360px] rounded bg-white p-[12px] flex flex-col items-start justify-evenly'>
         <label htmlFor="">Name</label>
