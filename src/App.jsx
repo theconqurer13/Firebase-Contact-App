@@ -1,15 +1,48 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Search from './components/Search'
 import FormModal from './components/AddContacts'
-
+import Contacts from './components/Contacts'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from './config/firebase'
 const App = () => {
+
+  const [contacts, setContacts] = React.useState([]);
+
+
+  useEffect(()=>{
+    const getContact = async () =>{
+      try {
+        const contactRef =  collection(db,"contacts");
+        const ContactsSnapshot =  await getDocs(contactRef);
+        const contactList = ContactsSnapshot.docs.map((doc)=>{
+          return {
+          id:doc.id,
+          ...doc.data(),
+        }
+      });
+        const data = await contactList.json();
+        setContacts(data);
+      } catch (error) {
+        throw {error}
+      }
+    }
+
+    getContact();
+  },[])
+
+
+
+
+
+
   return (
     <div className='flex justify-center '>
-      <div className='flex flex-col items-center h-[852px] w-[400px] p-5 bg-slate-400 gap-1'>
+      <div className='flex flex-col items-center h-[852px] w-[400px] p-5  gap-1'>
        <Navbar/>
        <Search/>
-       <FormModal/>
+       {/* <FormModal/> */}
+       <Contacts/>
       </div>
     </div>
   )
