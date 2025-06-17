@@ -4,7 +4,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 const Contacts = ({key,name,email}) => {
   return (
-    <div  key = {key} className='h-[64px] w-[360px] rounded bg-[#FFEAAE] p-2 mt-4'>
+    <div  key = {key} className='h-[64px] w-[360px] rounded bg-[#FFEAAE] p-2 mt-3'>
         <div className='h-[48px] w-[240px] border-none flex items-center relative'>
             <div className='mr-1'>
                 <IoMdContact className='text-[#F6820C] h-[48px] w-[48px]'/>

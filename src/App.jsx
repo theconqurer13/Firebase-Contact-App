@@ -8,6 +8,16 @@ import { db } from './config/firebase'
 const App = () => {
 
   const [contacts, setContacts] = React.useState([]);
+  const [isOpen,setOpen] = React.useState(false);
+  
+  const OnOpen = ()=>{
+    setOpen(true);
+  }
+
+  const OnClose = ()=>{
+    setOpen(false);
+  }
+
 
 
   useEffect(()=>{
@@ -39,16 +49,22 @@ const App = () => {
   return (
     
     <div className='flex justify-center '>
-      <div className='flex flex-col items-center h-[852px] w-[400px] p-5  gap-1'>
+      <div className='flex flex-col items-center h-[100vh] w-[400px] p-5  gap-1 relative '>
        <Navbar/>
-       <Search/>
-       {/* <FormModal/> */}
-       {
+       <Search OnOpen={OnOpen}/>
+       <div className=' overflow-y-scroll hide-scrollbar '>
+          {
         contacts.map((contact)=>{
           return <Contacts key={contact.id} name={contact.Name} email={contact.Email}/>
         })
        }
+       </div>
+       
+       <FormModal isOpen={isOpen} onClose={OnClose}/>  
       </div>
+
+           
+
     </div>
   )
 }
