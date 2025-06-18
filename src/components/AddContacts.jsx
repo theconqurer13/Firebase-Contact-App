@@ -2,13 +2,24 @@ import React from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import {Form,Field,Formik} from 'formik'
 import {db} from '../config/firebase.js'
-import {collection, addDoc} from 'firebase/firestore'
-const FormModal = ({onClose,isOpen,setOpen,isUpdate,name,email}) => {
+import {collection, addDoc, doc, updateDoc} from 'firebase/firestore'
+const FormModal = ({onClose,isOpen,setOpen,isUpdate,name,email,id}) => {
 
   const addContact = async (contact) =>{
     try {
       const ContactRef = collection(db,"contacts");
       await addDoc(ContactRef,contact)
+    } catch (error) {
+      console.log(error);
+      throw {error}
+    }
+  }
+
+
+  const updateContact = async (contact) =>{
+    try {
+      const ContactRef = doc(db,"contacts",id);
+      await updateDoc(ContactRef,contact)
     } catch (error) {
       console.log(error);
       throw {error}
@@ -31,9 +42,7 @@ const FormModal = ({onClose,isOpen,setOpen,isUpdate,name,email}) => {
         }}
         onSubmit={
           (values)=>{
-           addContact(
-            values  
-           ); 
+            isUpdate ? updateContact(values,id) : addContact(values);
             setOpen(false);
           }
          

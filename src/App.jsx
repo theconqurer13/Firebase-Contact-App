@@ -3,13 +3,13 @@ import Navbar from './components/Navbar'
 import Search from './components/Search'
 import FormModal from './components/AddContacts'
 import Contacts from './components/Contacts'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, onSnapshot } from 'firebase/firestore'
 import { db } from './config/firebase'
 const App = () => {
   const [isUpdate,setisUpdate] = React.useState(false)
   const [contacts, setContacts] = React.useState([]);
   const [isOpen,setOpen] = React.useState(false);
-  
+  const [selectedContact, setSelectedContact] = React.useState(null);
   const OnOpen = ()=>{
     setOpen(true);
   }
@@ -22,15 +22,19 @@ const App = () => {
     const getContact = async () =>{
       try {
         const contactRef =  collection(db,"contacts");
-        const ContactsSnapshot =  await getDocs(contactRef);
-        const contactList = ContactsSnapshot.docs.map((doc)=>{
-          return {
-          id:doc.id,
-          ...doc.data(),
-        }
-      });
+        
+
+        onSnapshot(contactRef,(snapshot)=>{
+           const contactList =snapshot.docs.map((doc)=>{
+            return {
+            id:doc.id,
+            ...doc.data(),
+              }
+            });
        
         setContacts(contactList);
+        return contactList;
+        });
       } catch (error) {
         throw {error}
       }
@@ -53,12 +57,12 @@ const App = () => {
        <div className=' overflow-y-scroll hide-scrollbar '>
           {
         contacts.map((contact)=>{
-          return <Contacts id={contact.id} name={contact.name} email={contact.email} setisUpdate={setisUpdate} OnOpen={OnOpen}/>
+          return <Contacts key={contact.id} id={contact.id} name={contact.name} email={contact.email} setisUpdate={setisUpdate} OnOpen={OnOpen} setSelectedContact={setSelectedContact}/>
         })
        }
        </div>
        
-       <FormModal isOpen={isOpen} onClose={OnClose} setOpen={setOpen} isUpdate={isUpdate}/>  
+       <FormModal isOpen={isOpen} onClose={OnClose} setOpen={setOpen} isUpdate={isUpdate} id={selectedContact?.id} name={selectedContact?.name || ""} email={selectedContact?.email || ""}/>  
       </div>
 
            

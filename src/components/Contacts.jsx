@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { doc } from 'firebase/firestore';
-const Contacts = ({id,name,email,setisUpdate,OnOpen}) => {
+const Contacts = ({id,name,email,setisUpdate,OnOpen,setSelectedContact}) => {
 
     const deleteContact = async (id)=>{
         try {
@@ -16,7 +16,7 @@ const Contacts = ({id,name,email,setisUpdate,OnOpen}) => {
         }
     };
 
-
+    
 
     const setupdate = ()=>{
         setisUpdate(true);
@@ -40,7 +40,8 @@ const Contacts = ({id,name,email,setisUpdate,OnOpen}) => {
             <div className=' flex gap-1 absolute ml-[280px]'>
             <FaUserEdit className='h-[32px] w-[32px] hover:scale-[120%] transition ease-in-out duration-200 cursor-pointer' onClick={()=>{
                 setupdate();
-                OnOpen();   
+                OnOpen(); 
+                setSelectedContact({ id, name, email });  
             }}/>
             <MdDelete className='h-[32px] w-[32px] hover:scale-[120%] transition ease-in-out duration-200 ' onClick={()=> deleteContact(id)}/>
             </div>
