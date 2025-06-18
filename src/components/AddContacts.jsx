@@ -3,12 +3,15 @@ import { AiOutlineClose } from 'react-icons/ai'
 import {Form,Field,Formik} from 'formik'
 import {db} from '../config/firebase.js'
 import {collection, addDoc, doc, updateDoc} from 'firebase/firestore'
+import { toast } from 'react-toastify'
 const FormModal = ({onClose,isOpen,setOpen,isUpdate,name,email,id}) => {
 
   const addContact = async (contact) =>{
     try {
       const ContactRef = collection(db,"contacts");
-      await addDoc(ContactRef,contact)
+      await addDoc(ContactRef,contact);
+       toast.success('Contact added successfully');
+      onClose();
     } catch (error) {
       console.log(error);
       throw {error}
@@ -19,7 +22,9 @@ const FormModal = ({onClose,isOpen,setOpen,isUpdate,name,email,id}) => {
   const updateContact = async (contact) =>{
     try {
       const ContactRef = doc(db,"contacts",id);
-      await updateDoc(ContactRef,contact)
+      await updateDoc(ContactRef,contact);
+      toast.success('Contact Updated successfully');
+      onClose();
     } catch (error) {
       console.log(error);
       throw {error}

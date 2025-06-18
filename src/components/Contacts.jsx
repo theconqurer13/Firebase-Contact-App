@@ -5,21 +5,24 @@ import { MdDelete } from "react-icons/md";
 import { deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { doc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 const Contacts = ({id,name,email,setisUpdate,OnOpen,setSelectedContact}) => {
 
     const deleteContact = async (id)=>{
         try {
             await deleteDoc(doc(db,"contacts",id));
             console.log("Contact deleted successfully");
+            toast.success('Contact deleted successfully');
         } catch (error) {
               console.log("Delete error:", error);
         }
     };
 
-    
+
 
     const setupdate = ()=>{
         setisUpdate(true);
+        
     }
 
   return (
