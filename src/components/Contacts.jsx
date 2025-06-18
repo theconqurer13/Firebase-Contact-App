@@ -38,8 +38,9 @@ const Contacts = ({id,name,email,setisUpdate,OnOpen}) => {
                 
             </div>
             <div className=' flex gap-1 absolute ml-[280px]'>
-            <FaUserEdit className='h-[32px] w-[32px] hover:scale-[120%] transition ease-in-out duration-200 cursor-pointer' onClick={()=> {
-                OnOpen
+            <FaUserEdit className='h-[32px] w-[32px] hover:scale-[120%] transition ease-in-out duration-200 cursor-pointer' onClick={()=>{
+                setupdate();
+                OnOpen();   
             }}/>
             <MdDelete className='h-[32px] w-[32px] hover:scale-[120%] transition ease-in-out duration-200 ' onClick={()=> deleteContact(id)}/>
             </div>

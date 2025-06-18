@@ -49,7 +49,7 @@ const App = () => {
     <div className='flex justify-center '>
       <div className='flex flex-col items-center h-[100vh] w-[400px] p-5  gap-1 relative '>
        <Navbar/>
-       <Search OnOpen={OnOpen}/>
+       <Search OnOpen={OnOpen} setisUpdate={setisUpdate}/>
        <div className=' overflow-y-scroll hide-scrollbar '>
           {
         contacts.map((contact)=>{
@@ -58,7 +58,7 @@ const App = () => {
        }
        </div>
        
-       <FormModal isOpen={isOpen} onClose={OnClose} setOpen={setOpen} isUpdate={isUpdate} contact={contact}/>  
+       <FormModal isOpen={isOpen} onClose={OnClose} setOpen={setOpen} isUpdate={isUpdate}/>  
       </div>
 
            

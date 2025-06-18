@@ -3,7 +3,8 @@ import { AiOutlineClose } from 'react-icons/ai'
 import {Form,Field,Formik} from 'formik'
 import {db} from '../config/firebase.js'
 import {collection, addDoc} from 'firebase/firestore'
-const FormModal = ({onClose,isOpen,setOpen,isUpdate,contact}) => {
+const FormModal = ({onClose,isOpen,setOpen,isUpdate,name,email}) => {
+
   const addContact = async (contact) =>{
     try {
       const ContactRef = collection(db,"contacts");
@@ -22,8 +23,8 @@ const FormModal = ({onClose,isOpen,setOpen,isUpdate,contact}) => {
       <>
       <Formik
         initialValues={isUpdate ? {
-          name:contact.name,
-          email:contact.email
+          name:name,
+          email:email
         }: {
           name:"",
           email:""
